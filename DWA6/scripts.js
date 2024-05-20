@@ -1,5 +1,5 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
-import { html } from "./view.js";
+import { html, setTheme } from "./view.js";
 
 let page = 1;
 let matches = books;
@@ -59,20 +59,18 @@ for (const [id, name] of Object.entries(authors)) {
 html.search.author.appendChild(authorsHtml);
 
 /**
- * Set theme using the settings toggle
+ * Set default theme on users preference
  */
-if (
-  window.matchMedia &&
-  window.matchMedia("(prefers-color-scheme: dark)").matches
-) {
-  html.settings.theme.value = "night";
-  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-} else {
-  html.settings.theme.value = "day";
-  document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-  document.documentElement.style.setProperty("--color-light", "255, 255, 255");
-}
+const defaultTheme = () => {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    setTheme("night");
+  } else {
+    setTheme("day");
+  }
+};
 
 html.list.button.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
 html.list.button.disabled = matches.length - page * BOOKS_PER_PAGE > 0;
@@ -86,19 +84,30 @@ html.list.button.innerHTML = `
     })</span>
 `;
 
+/**
+ * Close search overlay
+ */
 html.search.cancel.addEventListener("click", () => {
   html.search.overlay.open = false;
 });
-
+/**
+ * Close settings overlay
+ */
 html.settings.cancel.addEventListener("click", () => {
   html.settings.overlay.open = false;
 });
 
+/**
+ * Open search overlay
+ */
 html.header.search.addEventListener("click", () => {
   html.search.overlay.open = true;
   html.search.title.focus();
 });
 
+/**
+ * Open settings overlay
+ */
 html.header.settings.addEventListener("click", () => {
   html.settings.overlay.open = true;
 });
@@ -107,24 +116,22 @@ html.list.close.addEventListener("click", () => {
   html.list.overlay.open = false;
 });
 
+/**
+ * Toggle theme setting
+ */
 html.settings.form.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const { theme } = Object.fromEntries(formData);
 
-  if (theme === "night") {
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty(
-      "--color-light",
-      "255, 255, 255"
-    );
-  }
+  setTheme(theme);
 
   html.settings.overlay.open = false;
 });
+
+/**
+ * Search functionality
+ */
 
 html.search.form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -200,6 +207,9 @@ html.search.form.addEventListener("submit", (event) => {
   html.search.overlay.open = false;
 });
 
+/**
+ * Create preview
+ */
 html.list.button.addEventListener("click", () => {
   const fragment = document.createDocumentFragment();
 
@@ -261,4 +271,6 @@ html.list.items.addEventListener("click", (event) => {
   }
 });
 
-/* Created view.js with dom to make the html elements easier to read and more visible. Helps with readability. */
+/* Created view.js with dom to make the html elements easier to read and more visible. Helps with readability. 
+|* Created consts for day and night theme to make the function for selecting the theme easier to read.
+*/
