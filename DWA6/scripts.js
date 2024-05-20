@@ -272,5 +272,5 @@ html.list.items.addEventListener("click", (event) => {
 });
 
 /* Created view.js with dom to make the html elements easier to read and more visible. Helps with readability. 
-|* Created consts for day and night theme to make the function for selecting the theme easier to read.
+|* Created function for setting the theme
 */
