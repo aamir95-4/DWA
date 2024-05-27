@@ -1,12 +1,12 @@
 Applying SOLID principles:
 
-1. DOM - HTML object to help make the references to the document html much easier to read.
+- 1. DOM - HTML object to help make the references to the document html much easier to read.
 
-   const html = {
-   header: {
-   search: document.querySelector("[data-header-search]"),
-   settings: document.querySelector("[data-header-settings]"),
-   },
+  const html = {
+  header: {
+  search: document.querySelector("[data-header-search]"),
+  settings: document.querySelector("[data-header-settings]"),
+  },
 
 list: {
 items: document.querySelector("[data-list-items]"),
@@ -38,22 +38,22 @@ theme: document.querySelector("[data-settings-theme]"),
 },
 };
 
-2. setTheme variable - This const follows the S in the SOLID principle, it does one thing but can be used in multiple places in the code.
+- 2. setTheme variable - This const follows the S in the SOLID principle, it does one thing but can be used in multiple places in the code. Could be improved with SOLID principles by adding the extendability to add more themes in future developments of the book connect app.
 
-   const setTheme = (theme) => {
-   if (theme === "night") {
-   document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-   document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-   } else {
-   document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-   document.documentElement.style.setProperty(
-   "--color-light",
-   "255, 255, 255"
-   );
-   }
-   };
+  const setTheme = (theme) => {
+  if (theme === "night") {
+  document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
+  document.documentElement.style.setProperty("--color-light", "10, 10, 20");
+  } else {
+  document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
+  document.documentElement.style.setProperty(
+  "--color-light",
+  "255, 255, 255"
+  );
+  }
+  };
 
-3. Function to create the preview of books loaded on the page was used in multiple loactions in the scripts.js file, removing it and allowing the full code to only appear once with the function used in the scripts.js file makes the code more readable.
+- 3. Function to create the preview of books loaded on the page was used in multiple loactions in the scripts.js file, removing it and allowing the full code to only appear once with the function used in the scripts.js file makes the code more readable. Could improve by adding in the html.list.item.appendChild(fragment).
 
 export const loadPreview = (fragment) => {
 for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
@@ -77,3 +77,5 @@ element.setAttribute("data-preview", id);
 
 }
 };
+
+- 4.
