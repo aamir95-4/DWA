@@ -1,30 +1,30 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
-import { html, setTheme } from "./view.js";
+import { html, setTheme, loadPreview, matches } from "./view.js";
 
 let page = 1;
-let matches = books;
+// let matches = books;
 
 const starting = document.createDocumentFragment();
+loadPreview(starting);
+// for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
+//   const element = document.createElement("button");
+//   element.classList = "preview";
+//   element.setAttribute("data-preview", id);
 
-for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
+//   element.innerHTML = `
+//         <img
+//             class="preview__image"
+//             src="${image}"
+//         />
 
-  element.innerHTML = `
-        <img
-            class="preview__image"
-            src="${image}"
-        />
-        
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-    `;
+//         <div class="preview__info">
+//             <h3 class="preview__title">${title}</h3>
+//             <div class="preview__author">${authors[author]}</div>
+//         </div>
+//     `;
 
-  starting.appendChild(element);
-}
+//   starting.appendChild(element);
+// }
 
 html.list.items.appendChild(starting);
 
@@ -160,7 +160,7 @@ html.search.form.addEventListener("submit", (event) => {
   }
 
   page = 1;
-  matches = result;
+  let matches = result;
 
   if (result.length < 1) {
     html.list.message.classList.add("list__message_show");
@@ -171,25 +171,27 @@ html.search.form.addEventListener("submit", (event) => {
   html.list.items.innerHTML = "";
   const newItems = document.createDocumentFragment();
 
-  for (const { author, id, image, title } of result.slice(0, BOOKS_PER_PAGE)) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
+  loadPreview(newItems);
 
-    element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
+  // for (const { author, id, image, title } of result.slice(0, BOOKS_PER_PAGE)) {
+  //   const element = document.createElement("button");
+  //   element.classList = "preview";
+  //   element.setAttribute("data-preview", id);
 
-    newItems.appendChild(element);
-  }
+  //   element.innerHTML = `
+  //           <img
+  //               class="preview__image"
+  //               src="${image}"
+  //           />
+
+  //           <div class="preview__info">
+  //               <h3 class="preview__title">${title}</h3>
+  //               <div class="preview__author">${authors[author]}</div>
+  //           </div>
+  //       `;
+
+  //   newItems.appendChild(element);
+  // }
 
   html.list.items.appendChild(newItems);
   html.list.button.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
@@ -213,28 +215,29 @@ html.search.form.addEventListener("submit", (event) => {
 html.list.button.addEventListener("click", () => {
   const fragment = document.createDocumentFragment();
 
-  for (const { author, id, image, title } of matches.slice(
-    page * BOOKS_PER_PAGE,
-    (page + 1) * BOOKS_PER_PAGE
-  )) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
+  loadPreview(fragment);
+  // for (const { author, id, image, title } of matches.slice(
+  //   page * BOOKS_PER_PAGE,
+  //   (page + 1) * BOOKS_PER_PAGE
+  // )) {
+  //   const element = document.createElement("button");
+  //   element.classList = "preview";
+  //   element.setAttribute("data-preview", id);
 
-    element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
+  //   element.innerHTML = `
+  //           <img
+  //               class="preview__image"
+  //               src="${image}"
+  //           />
 
-    fragment.appendChild(element);
-  }
+  //           <div class="preview__info">
+  //               <h3 class="preview__title">${title}</h3>
+  //               <div class="preview__author">${authors[author]}</div>
+  //           </div>
+  //       `;
+
+  //   fragment.appendChild(element);
+  // }
 
   html.list.items.appendChild(fragment);
   page += 1;
