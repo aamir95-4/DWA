@@ -1,30 +1,20 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
-import { html, setTheme, loadPreview, matches } from "./view.js";
+import {
+  html,
+  setTheme,
+  loadPreview,
+  matches,
+  createEventListeners,
+  searchOverlay,
+  settingsOverlayClose,
+  settingsOverlayOpen,
+} from "./view.js";
 
 let page = 1;
 // let matches = books;
 
 const starting = document.createDocumentFragment();
 loadPreview(starting);
-// for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
-//   const element = document.createElement("button");
-//   element.classList = "preview";
-//   element.setAttribute("data-preview", id);
-
-//   element.innerHTML = `
-//         <img
-//             class="preview__image"
-//             src="${image}"
-//         />
-
-//         <div class="preview__info">
-//             <h3 class="preview__title">${title}</h3>
-//             <div class="preview__author">${authors[author]}</div>
-//         </div>
-//     `;
-
-//   starting.appendChild(element);
-// }
 
 html.list.items.appendChild(starting);
 
@@ -87,15 +77,11 @@ html.list.button.innerHTML = `
 /**
  * Close search overlay
  */
-html.search.cancel.addEventListener("click", () => {
-  html.search.overlay.open = false;
-});
+searchOverlay.addListener("click");
 /**
  * Close settings overlay
  */
-html.settings.cancel.addEventListener("click", () => {
-  html.settings.overlay.open = false;
-});
+settingsOverlayClose.addListener("click");
 
 /**
  * Open search overlay
@@ -108,9 +94,7 @@ html.header.search.addEventListener("click", () => {
 /**
  * Open settings overlay
  */
-html.header.settings.addEventListener("click", () => {
-  html.settings.overlay.open = true;
-});
+settingsOverlayOpen.addListener("click");
 
 html.list.close.addEventListener("click", () => {
   html.list.overlay.open = false;
@@ -173,26 +157,6 @@ html.search.form.addEventListener("submit", (event) => {
 
   loadPreview(newItems);
 
-  // for (const { author, id, image, title } of result.slice(0, BOOKS_PER_PAGE)) {
-  //   const element = document.createElement("button");
-  //   element.classList = "preview";
-  //   element.setAttribute("data-preview", id);
-
-  //   element.innerHTML = `
-  //           <img
-  //               class="preview__image"
-  //               src="${image}"
-  //           />
-
-  //           <div class="preview__info">
-  //               <h3 class="preview__title">${title}</h3>
-  //               <div class="preview__author">${authors[author]}</div>
-  //           </div>
-  //       `;
-
-  //   newItems.appendChild(element);
-  // }
-
   html.list.items.appendChild(newItems);
   html.list.button.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
@@ -216,28 +180,6 @@ html.list.button.addEventListener("click", () => {
   const fragment = document.createDocumentFragment();
 
   loadPreview(fragment);
-  // for (const { author, id, image, title } of matches.slice(
-  //   page * BOOKS_PER_PAGE,
-  //   (page + 1) * BOOKS_PER_PAGE
-  // )) {
-  //   const element = document.createElement("button");
-  //   element.classList = "preview";
-  //   element.setAttribute("data-preview", id);
-
-  //   element.innerHTML = `
-  //           <img
-  //               class="preview__image"
-  //               src="${image}"
-  //           />
-
-  //           <div class="preview__info">
-  //               <h3 class="preview__title">${title}</h3>
-  //               <div class="preview__author">${authors[author]}</div>
-  //           </div>
-  //       `;
-
-  //   fragment.appendChild(element);
-  // }
 
   html.list.items.appendChild(fragment);
   page += 1;

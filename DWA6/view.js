@@ -84,3 +84,46 @@ export const loadPreview = (fragment) => {
     fragment.appendChild(element);
   }
 };
+/**
+ *
+ * @param {*} buttonSelect
+ * @param {*} overlaySelect
+ * @param {true | false} eventType
+ * @returns
+ */
+export const createEventListeners = (
+  buttonSelect,
+  overlaySelect,
+  eventType
+) => {
+  return {
+    buttonSelect: buttonSelect,
+    overlaySelect: overlaySelect,
+    eventType: eventType,
+    addListener(eventType) {
+      this.buttonSelect.addEventListener(eventType, () => {
+        this.overlaySelect.open = this.eventType;
+      });
+    },
+  };
+};
+
+// Search Overlay
+export let searchOverlay = createEventListeners(
+  html.search.cancel,
+  html.search.overlay,
+  false
+);
+
+// Settings Overlay
+export let settingsOverlayClose = createEventListeners(
+  html.settings.cancel,
+  html.settings.overlay,
+  false
+);
+
+export let settingsOverlayOpen = createEventListeners(
+  html.header.settings,
+  html.settings.overlay,
+  true
+);
