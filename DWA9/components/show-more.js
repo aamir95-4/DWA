@@ -26,11 +26,7 @@ template.innerHTML = `
         } 
     </style>
     <button class="show-more"><span>Show more</span>
-        <span class="list__remaining"> (${
-          matches.length - page * BOOKS_PER_PAGE > 0
-            ? matches.length - page * BOOKS_PER_PAGE
-            : 0
-        })</span></button>
+        <span class="list__remaining">></button>
 `;
 class ShowMore extends HTMLElement {
   inner = this.attachShadow({ mode: "closed" });

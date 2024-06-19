@@ -5,7 +5,7 @@ I encountered problems in trying to adjust the existing code to work in the comp
 
 What other elements make sense to convert into web components? Why?
 
-I think the search filters can be converted into a component as it would work well in an object style method of coding and simplify the code as well as make it more modular and expandable.
+I think the search filters can be converted into a component as it would work well in an object style method of coding and simplify the code as well as make it more modular and expandable. Load preview...
 
 Why does keeping your HTML, CSS and JavaScript in a single file sometimes make sense?
 
