@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tally Count</title>
+
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"
+    ></script>
+
+    <script src="./scripts.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header_title">Tally Count</h1>
+    </header>
+    <aside class="controls">
+      <sl-dropdown>
+        <sl-button variant="neutral" slot="trigger" caret>Display</sl-button>
+        <sl-menu>
+          <sl-menu-item>Single</sl-menu-item>
+          <sl-menu-item>Multiple</sl-menu-item>
+        </sl-menu>
+      </sl-dropdown>
+
+      <sl-dropdown>
+        <sl-button variant="neutral" slot="trigger" caret>Counter</sl-button>
+        <sl-menu>
+          <sl-menu-item>Counter 1</sl-menu-item>
+          <sl-menu-item>Counter 2</sl-menu-item>
+          <sl-menu-item>Counter 3</sl-menu-item>
+        </sl-menu>
+      </sl-dropdown>
+
+      <sl-button variant="neutral">Settings</sl-button>
+    </aside>
+
+    <main class="counter">
+      <input class="counter_value" data-key="number" readonly value="0" />
+      <div class="counter_actions">
+        <sl-button
+          variant="neutral"
+          size="large"
+          style="width: 50%"
+          data-key="subtract"
+        >
+          -
+        </sl-button>
+        <sl-button
+          variant="neutral"
+          size="large"
+          style="width: 50%"
+          data-key="add"
+          >+</sl-button
+        >
+      </div>
+    </main>
+    <footer class="footer">
+      Inspired by
+      <a class="footer_link" href="https://tallycount.app">Tally Count</a>. Note
+      this is a practice project.
+    </footer>
+  </body>
+</html>
