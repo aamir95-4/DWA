@@ -9,9 +9,9 @@ import {
   settingsOverlayClose,
   settingsOverlayOpen,
 } from "./view.js";
+import "../DWA9/components/show-more.js";
 
-let page = 1;
-// let matches = books;
+export let page = 1;
 
 const starting = document.createDocumentFragment();
 loadPreview(starting);
@@ -63,16 +63,16 @@ const defaultTheme = () => {
 };
 
 html.list.button.innerText = `Show more (${books.length - BOOKS_PER_PAGE})`;
-html.list.button.disabled = matches.length - page * BOOKS_PER_PAGE > 0;
+html.list.button.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
-html.list.button.innerHTML = `
-    <span>Show more</span>
-    <span class="list__remaining"> (${
-      matches.length - page * BOOKS_PER_PAGE > 0
-        ? matches.length - page * BOOKS_PER_PAGE
-        : 0
-    })</span>
-`;
+// html.list.button.innerHTML = `
+//     <span>Show more</span>
+//     <span class="list__remaining"> (${
+//       matches.length - page * BOOKS_PER_PAGE > 0
+//         ? matches.length - page * BOOKS_PER_PAGE
+//         : 0
+//     })</span>
+// `;
 
 /**
  * Close search overlay
@@ -158,16 +158,15 @@ html.search.form.addEventListener("submit", (event) => {
   loadPreview(newItems);
 
   html.list.items.appendChild(newItems);
-  html.list.button.disabled = matches.length - page * BOOKS_PER_PAGE < 1;
 
-  html.list.button.innerHTML = `
-        <span>Show more</span>
-        <span class="list__remaining"> (${
-          matches.length - page * BOOKS_PER_PAGE > 0
-            ? matches.length - page * BOOKS_PER_PAGE
-            : 0
-        })</span>
-    `;
+  // html.list.button.innerHTML = `
+  //       <span>Show more</span>
+  //       <span class="list__remaining"> (${
+  //         matches.length - page * BOOKS_PER_PAGE > 0
+  //           ? matches.length - page * BOOKS_PER_PAGE
+  //           : 0
+  //       })</span>
+  //   `;
 
   window.scrollTo({ top: 0, behavior: "smooth" });
   html.search.overlay.open = false;
