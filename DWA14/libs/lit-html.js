@@ -1697,4 +1697,3 @@ export {
   Ss as when,
   Ps as withStatic,
 };
-//# sourceMappingURL=lit-all.min.js.map

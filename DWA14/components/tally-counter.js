@@ -1,4 +1,5 @@
-import { LitElement, html, css, directive } from "../libs/lit-html.js";
+import { LitElement, html, css } from "../libs/lit-html.js";
+import { store } from "../store.js";
 
 class TallyCounter extends LitElement {
   static styles = css`
@@ -18,23 +19,50 @@ class TallyCounter extends LitElement {
     .counter_actions {
       display: flex;
     }
+    sl-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   `;
+
   static get properties() {
     return {
       count: { type: Number },
+      isAtMax: { type: Boolean },
+      isAtMin: { type: Boolean },
     };
   }
 
   constructor() {
     super();
-    this.count = 0;
+    this.count = store.getCount();
+    this.isAtMax = store.isAtMax();
+    this.isAtMin = store.isAtMin();
+
+    this.handleStoreUpdate = this.handleStoreUpdate.bind(this);
+    store.subscribe(this.handleStoreUpdate);
   }
 
-  setCount = (count) => {
-    this.count = count;
-  };
+  handleStoreUpdate() {
+    this.count = store.getCount();
+    this.isAtMax = store.isAtMax();
+    this.isAtMin = store.isAtMin();
+  }
+
+  increment() {
+    store.increment();
+  }
+
+  decrement() {
+    store.decrement();
+  }
+
+  reset() {
+    store.reset();
+  }
+
   render() {
-    const { count } = this;
+    const { count, isAtMax, isAtMin } = this;
     return html`
       <input class="counter_value" readonly value="${count}" />
       <div class="counter_actions">
@@ -42,21 +70,20 @@ class TallyCounter extends LitElement {
           variant="neutral"
           size="large"
           style="width: 50%"
-          @click=${() => this.setCount(count - 1)}
+          @click=${this.decrement}
+          ?disabled=${isAtMin}
           >-</sl-button
         ><sl-button
           variant="neutral"
           size="large"
           style="width: 50%"
-          @click=${() => this.setCount(count + 1)}
+          @click=${this.increment}
+          ?disabled=${isAtMax}
           >+</sl-button
         >
       </div>
       <div>
-        <sl-button
-          variant="neutral"
-          size="large"
-          @click=${() => (this.count = 0)}
+        <sl-button variant="neutral" size="large" @click=${this.reset}
           >Reset</sl-button
         >
       </div>

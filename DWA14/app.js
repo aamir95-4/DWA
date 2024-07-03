@@ -1,6 +1,11 @@
 import { LitElement, html, css } from "./libs/lit-html.js";
 import "./components/tally-counter.js";
 class TallyApp extends LitElement {
+  static styles = css`
+    h1 {
+      text-align: center;
+    }
+  `;
   render() {
     return html`
       <header class="header">
@@ -23,7 +28,6 @@ class TallyApp extends LitElement {
             <sl-menu-item>Counter 3</sl-menu-item>
           </sl-menu>
         </sl-dropdown>
-        <sl-button data-key="reset" variant="neutral">Reset</sl-button>
       </aside>
       <tally-counter></tally-counter>
       <footer class="footer">
